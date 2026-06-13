@@ -26,11 +26,11 @@ function StatusBar({ scrolled }: { scrolled?: boolean }) {
         <div
           className="pointer-events-none absolute top-0 right-0 left-0 z-[29]"
           style={{
-            height: 76,
+            height: 90,
             backdropFilter: "blur(16px)",
             WebkitBackdropFilter: "blur(16px)",
-            maskImage: "linear-gradient(to bottom, black 74%, rgba(0,0,0,0))",
-            WebkitMaskImage: "linear-gradient(to bottom, black 74%, rgba(0,0,0,0))",
+            maskImage: "linear-gradient(to bottom, black 44px, rgba(0,0,0,0) 90px)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 44px, rgba(0,0,0,0) 90px)",
             background: "rgba(255,255,255,0.3)",
           }}
         />
