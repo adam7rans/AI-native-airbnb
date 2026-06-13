@@ -23,17 +23,27 @@ function StatusBar({ scrolled }: { scrolled?: boolean }) {
   return (
     <>
       {scrolled ? (
-        <div
-          className="pointer-events-none absolute top-0 right-0 left-0 z-[29]"
-          style={{
-            height: 90,
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
-            maskImage: "linear-gradient(to bottom, black 44px, rgba(0,0,0,0) 90px)",
-            WebkitMaskImage: "linear-gradient(to bottom, black 44px, rgba(0,0,0,0) 90px)",
-            background: "rgba(255,255,255,0.3)",
-          }}
-        />
+        <>
+          {[
+            { h: 48, blur: 6, white: 0.12 },
+            { h: 62, blur: 4, white: 0.08 },
+            { h: 76, blur: 3, white: 0.06 },
+            { h: 92, blur: 2, white: 0.04 },
+          ].map(({ h, blur, white }, i) => (
+            <div
+              key={i}
+              className="pointer-events-none absolute top-0 right-0 left-0 z-[29]"
+              style={{
+                height: h,
+                backdropFilter: `blur(${blur}px)`,
+                WebkitBackdropFilter: `blur(${blur}px)`,
+                maskImage: `linear-gradient(to bottom, black ${h - 16}px, rgba(0,0,0,0) ${h}px)`,
+                WebkitMaskImage: `linear-gradient(to bottom, black ${h - 16}px, rgba(0,0,0,0) ${h}px)`,
+                background: `rgba(255,255,255,${white})`,
+              }}
+            />
+          ))}
+        </>
       ) : (
         <div className="absolute top-0 right-0 left-0 z-[29] h-11 bg-white" />
       )}
