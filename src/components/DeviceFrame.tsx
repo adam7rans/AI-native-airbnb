@@ -83,8 +83,8 @@ export default function DeviceFrame({
           {scrollHint !== undefined && (
             <div className="absolute top-14 right-1.5 bottom-24 z-30 w-1">
               <div
-                className="w-1 rounded-full bg-black/30"
-                style={{ height: "34%", marginTop: `${scrollHint * 66}%` }}
+                className="absolute w-1 rounded-full bg-black/30"
+                style={{ height: "34%", top: `${scrollHint * 66}%` }}
               />
             </div>
           )}
