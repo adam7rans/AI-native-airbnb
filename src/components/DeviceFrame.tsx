@@ -19,21 +19,24 @@ interface Props {
   scrollHint?: number; // 0..1 scroll position for the side indicator (omit to hide)
 }
 
-function StatusBar() {
+function StatusBar({ scrolled }: { scrolled?: boolean }) {
   return (
     <>
-      {/* Progressive blur zone — content fades into blur behind the status bar */}
-      <div
-        className="pointer-events-none absolute top-0 right-0 left-0 z-[29]"
-        style={{
-          height: 76,
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          maskImage: "linear-gradient(to bottom, black 74%, rgba(0,0,0,0))",
-          WebkitMaskImage: "linear-gradient(to bottom, black 74%, rgba(0,0,0,0))",
-          background: "rgba(255,255,255,0.3)",
-        }}
-      />
+      {scrolled ? (
+        <div
+          className="pointer-events-none absolute top-0 right-0 left-0 z-[29]"
+          style={{
+            height: 76,
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            maskImage: "linear-gradient(to bottom, black 74%, rgba(0,0,0,0))",
+            WebkitMaskImage: "linear-gradient(to bottom, black 74%, rgba(0,0,0,0))",
+            background: "rgba(255,255,255,0.3)",
+          }}
+        />
+      ) : (
+        <div className="absolute top-0 right-0 left-0 z-[29] h-11 bg-white" />
+      )}
       <div className="absolute top-0 right-0 left-0 z-30 h-11">
         <div className="flex h-11 items-center justify-between px-6 pt-1 text-[13px] font-semibold text-ink-900">
           <span>9:41</span>
@@ -91,7 +94,7 @@ export default function DeviceFrame({
             <div className="pt-11">{children}</div>
           </div>
 
-          <StatusBar />
+          <StatusBar scrolled={scrollY > 0} />
 
           {/* scroll position indicator — handle only, no track */}
           {scrollHint !== undefined && (
