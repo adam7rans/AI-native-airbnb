@@ -5,6 +5,13 @@ High-fidelity **flow board** of a re-imagined, AI-native Airbnb home experience
 AI-generated **Adaptive Trip Canvas** built from years of travel behavior — then steers it
 through voice, text, taps, circles, and feedback.
 
+## Documentation
+
+- [PRD · Adaptive Trip Canvas](./docs/01_PRD_AI_Native_Airbnb_Adaptive_Trip_Canvas.md) — product
+  concept and requirements for the AI-native Airbnb home experience.
+- [Backend Tech Spec · User Travel Memory & GraphRAG](./docs/02_Backend_Tech_Spec_User_Travel_Memory_GraphRAG.md)
+  — backend architecture for travel memory and GraphRAG retrieval.
+
 ## How it's structured (and why)
 
 This is a **presentation artifact, not an interactive app**. Each branch is a **user flow**
