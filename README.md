@@ -11,6 +11,8 @@ through voice, text, taps, circles, and feedback.
   concept and requirements for the AI-native Airbnb home experience.
 - [Backend Tech Spec · User Travel Memory & GraphRAG](./docs/02_Backend_Tech_Spec_User_Travel_Memory_GraphRAG.md)
   — backend architecture for travel memory and GraphRAG retrieval.
+- [Agent Build Prompt](./docs/airbnb_ai_native_agent_prompt.md) — the prompt used to build the
+  mobile screens / flow board in this repo.
 
 ## How it's structured (and why)
 

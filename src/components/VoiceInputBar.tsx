@@ -35,11 +35,11 @@ export default function VoiceInputBar({
       <div className={wrapper}>
         <div className="flex items-center gap-2 rounded-[32px] border border-black/10 bg-white px-1.5 py-3 shadow-[0_8px_30px_-10px_rgba(0,0,0,0.25)]">
           <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-ink-500">
-            <Plus className="h-[18px] w-[18px]" />
+            <Plus className="h-[30px] w-[30px]" />
           </button>
           <VoiceWaveform />
           <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-ink-500">
-            <Mic className="h-[18px] w-[18px]" />
+            <Mic className="h-[30px] w-[30px]" />
           </button>
           <button className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-coral-500 text-white">
             <Close className="h-5 w-5" />
@@ -53,11 +53,11 @@ export default function VoiceInputBar({
     <div className={wrapper}>
       <div className="flex items-center gap-2 rounded-[32px] border border-black/10 bg-white px-1.5 py-3 shadow-[0_8px_30px_-10px_rgba(0,0,0,0.25)]">
         <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-ink-500">
-          <Plus className="h-[18px] w-[18px]" />
+          <Plus className="h-[30px] w-[30px]" />
         </button>
         <span className="flex-1 truncate text-[14px] text-ink-500">{placeholder}</span>
         <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-ink-500">
-          <Mic className="h-[18px] w-[18px]" />
+          <Mic className="h-[30px] w-[30px]" />
         </button>
         <button className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-coral-500 text-white">
           <Waveform className="h-5 w-5" />
