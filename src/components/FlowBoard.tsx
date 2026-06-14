@@ -131,7 +131,7 @@ export default function FlowBoard({ flow }: { flow: Flow }) {
   return (
     <section className="flex flex-col gap-6 xl:flex-row xl:items-start">
       <BranchSummary flow={flow} />
-      <div className="no-scrollbar -mx-2 flex items-stretch overflow-x-auto px-2 pb-2">
+      <div className="custom-scrollbar flex items-stretch overflow-x-auto pb-4 pr-8">
         {flow.steps.map((step, i) => (
           <div key={i} className="flex items-stretch">
             {i > 0 && <FlowArrow />}
