@@ -27,8 +27,8 @@ export default function VoiceInputBar({
   listening = false,
 }: Props) {
   const wrapper = floating
-    ? "absolute right-0 bottom-0 left-0 z-20 px-5 pb-5"
-    : "px-5 py-5";
+    ? "absolute right-0 bottom-0 left-0 z-20 px-9 pb-5"
+    : "px-9 py-5";
 
   if (listening) {
     return (

@@ -88,7 +88,7 @@ export const CANVAS_CARDS: RecCard[] = [
     reason: "Quiet, near water, strong Wi-Fi — matches your past July stays",
     price: "$210 / night",
     rating: 4.96,
-    buttons: ["Check July availability", "Find similar"],
+    buttons: ["Find similar"],
   },
   {
     id: "seaside-loft",
@@ -97,7 +97,7 @@ export const CANVAS_CARDS: RecCard[] = [
     title: "Quiet Seaside Loft",
     location: "Comporta, Portugal",
     image: IMAGES.seasideLoft,
-    subtitle: "Similar to your Croatia stays, but less expensive",
+    subtitle: "You stayed here once — similar vibe to your Croatia favorites",
     reason: "Same calm-water feel and workspace, ~25% lower nightly price",
     price: "$158 / night",
     rating: 4.91,

@@ -118,11 +118,18 @@ function BranchSummary({ flow }: { flow: Flow }) {
         </div>
       </div>
 
-      <div className="mt-4 border-t border-black/5 pt-3">
-        <a href="#" className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-coral-600">
-          <Sparkle className="h-3.5 w-3.5" /> Related PRD: [insert PRD link here]
-        </a>
-      </div>
+      {flow.prdSection && (
+        <div className="mt-4 border-t border-black/5 pt-3">
+          <a
+            href={`https://github.com/adam7rans/AI-native-airbnb/blob/main/docs/01_PRD_AI_Native_Airbnb_Adaptive_Trip_Canvas.md${flow.prdSection.anchor}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-coral-600 hover:text-coral-700"
+          >
+            <Sparkle className="h-3.5 w-3.5" /> PRD: {flow.prdSection.label}
+          </a>
+        </div>
+      )}
     </div>
   );
 }

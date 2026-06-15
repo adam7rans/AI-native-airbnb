@@ -32,6 +32,7 @@ export interface Flow {
   summary: string;
   aiBehavior: string;
   whyMatters: string;
+  prdSection?: { label: string; anchor: string };
   steps: Step[];
 }
 
@@ -43,16 +44,17 @@ export const FLOWS: Flow[] = [
     tag: "Entry",
     title: "Adaptive Trip Canvas",
     summary:
-      "The shared starting point for every branch. Alex opens Airbnb in April and the home screen is already generated from years of behavior.",
+      "The shared starting point. Alex is a returning Airbnb user who has booked a seaside trip every July for the past five years — and every year, he starts planning in March or April. The AI has detected this pattern from years of search history, browsing behavior, and past bookings. So when Alex opens the app in April, the AI already knows he's about to plan his July trip. The home screen isn't a blank search box — it's a fully generated trip plan, ready before he types a word.",
     aiBehavior:
-      "Detects the recurring July seaside pattern and assembles a canvas of past favorites, new matches, experiences, and services — each with a 'why it fits' line and a live Trip Brief.",
+      "Ingests years of in-app behavior — searches, listing views, photo inspections, bookings, and timing patterns — to build a user travel profile. Detects that Alex plans a July coastal trip every spring, then auto-generates a canvas of past favorites, new matches, experiences, and services, each with a 'why it fits' explanation and a live Trip Brief.",
     whyMatters:
-      "Airbnb opens as a planning agent, not a blank search box. The first screen is a generated trip, not an empty query.",
+      "Airbnb opens as a planning agent, not a blank search box. Instead of starting from an empty query, the first screen is a generated trip built from real behavioral data — showing the user that the app already understands what they want.",
+    prdSection: { label: "§5 Example Scenario", anchor: "#5-example-scenario" },
     steps: [
       {
         action: "Open",
         caption: "App opens",
-        detail: "Alex launches Airbnb — no search, no dates. Lands on the generated canvas (hero, chips, Trip Brief peek).",
+        detail: "Alex opens Airbnb in April — types nothing, enters no dates. The AI has already built a personalized home screen from five years of July seaside bookings.",
         screen: <CanvasScreen />,
         input: ask,
         scrollHint: 0,
@@ -60,7 +62,7 @@ export const FLOWS: Flow[] = [
       {
         action: "Scroll",
         caption: "Scroll the canvas",
-        detail: "Alex scrolls down to reveal the generated cards: past favorite, new match, experience, and service.",
+        detail: "Alex scrolls to see AI-generated cards — a past favorite stay, a new match, a local experience, and a service — each with a 'why it fits' explanation drawn from real booking history.",
         screen: <CanvasScreen />,
         scrollY: 520,
         scrollHint: 0.7,
@@ -76,6 +78,7 @@ export const FLOWS: Flow[] = [
     aiBehavior:
       "Reconstructs last July's home + experience + service bundle from memory and re-checks each against this summer's availability.",
     whyMatters: "A returning user can repeat a known-good trip in one tap, or swap any single part.",
+    prdSection: { label: "§10 Branch 1: Repeat Last Year", anchor: "#branch-1-repeat-last-year" },
     steps: [
       {
         action: "Tap",
@@ -112,6 +115,7 @@ export const FLOWS: Flow[] = [
     aiBehavior:
       "Updates the Trip Brief (quiet neighborhoods, avoid nightlife, sleep-quality reviews) and regenerates cards with a 'Why this changed' explanation.",
     whyMatters: "The AI transforms the trip along a chosen axis while keeping what worked.",
+    prdSection: { label: "§10 Branch 2: Same Trip, But Better", anchor: "#branch-2-same-trip-but-better" },
     steps: [
       {
         action: "Tap",
@@ -156,6 +160,7 @@ export const FLOWS: Flow[] = [
     aiBehavior:
       "Surfaces Wi-Fi, workspace, quiet, balcony view, and walk-to-water first, with a personalized 'Why this fits' summary and quick jumps.",
     whyMatters: "The detail page answers this user's specific questions immediately.",
+    prdSection: { label: "§10 Branch 3: Focus on One Home", anchor: "#branch-3-focus-on-one-home-and-give-visual-feedback" },
     steps: [
       {
         action: "Tap",
@@ -194,6 +199,7 @@ export const FLOWS: Flow[] = [
     aiBehavior:
       "Turns hand-drawn circles + speech into structured constraints (window bathroom, larger balcony, better view) and regenerates matching homes.",
     whyMatters: "Users react to images directly instead of describing everything in words.",
+    prdSection: { label: "§10 Branch 3: Visual Feedback", anchor: "#branch-3-focus-on-one-home-and-give-visual-feedback" },
     steps: [
       {
         action: "Open",
@@ -252,6 +258,7 @@ export const FLOWS: Flow[] = [
     aiBehavior:
       "Treats the lassoed home + experience + service as context and assembles a coherent bundle (Trip Option A).",
     whyMatters: "Users create context visually instead of specifying every constraint in words.",
+    prdSection: { label: "§10 Branch 4: Circle-to-Bundle", anchor: "#branch-4-circle-multiple-items-to-build-a-trip-bundle" },
     steps: [
       {
         action: "Open",
@@ -286,6 +293,7 @@ export const FLOWS: Flow[] = [
     aiBehavior:
       "Renders last July as a day-by-day plan and applies a spoken edit — moving, removing, and adding timed items while checking availability.",
     whyMatters: "AI-native Airbnb manages the trip as a living, editable object.",
+    prdSection: { label: "§10 Branch 5: Itinerary Remix", anchor: "#branch-5-review-and-remix-itinerary" },
     steps: [
       {
         action: "Open",

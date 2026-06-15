@@ -64,13 +64,13 @@ export default function RecommendationCard({ card }: { card: RecCard }) {
 
         <div className="mt-3 flex items-center justify-between">
           {card.price && (
-            <span className="text-[14px] font-bold text-ink-900">{card.price}</span>
+            <span className="whitespace-nowrap text-[14px] font-bold text-ink-900">{card.price}</span>
           )}
           <div className="ml-auto flex gap-2">
             {card.buttons.map((b, i) => (
               <button
                 key={b}
-                className={`rounded-full px-3 py-1.5 text-[12px] font-semibold transition ${
+                className={`whitespace-nowrap rounded-full px-3 py-1.5 text-[12px] font-semibold transition ${
                   i === 0
                     ? "bg-ink-900 text-white"
                     : "border border-black/10 bg-white text-ink-700"
