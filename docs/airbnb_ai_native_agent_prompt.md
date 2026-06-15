@@ -402,13 +402,13 @@ Show circle/draw interaction on images.
 
 ### User Action
 
-The user opens the gallery, circles a bathroom image, and says:
+The user opens the gallery from the personalized listing detail view, taps the plus menu, enables draw mode, circles a bathroom image, and says:
 
-> I like this bathroom, but I want one with a window.
+> I want a brighter bathroom.
 
 Then the user circles a balcony and says:
 
-> Bigger balcony, better view.
+> And on this photo, I want a bigger balcony and better view.
 
 ### Screen Content
 
@@ -425,22 +425,23 @@ Include:
 
 User:
 
-> I like this bathroom, but with natural light.
+> I want a brighter bathroom.
 
 User:
 
-> Bigger balcony, better view.
+> And on this photo, I want a bigger balcony and better view.
 
 ### AI Response
 
-> Got it. I’ll find homes with similar style, a brighter bathroom, larger balcony, verified Wi-Fi, and a quiet coastal location.
+> Got it. Finding homes with a brighter bathroom, bigger balcony, better view, verified Wi-Fi, and a quiet coastal location.
 
 ### Updated Trip Brief Chips
 
-- Bathroom with window/skylight
-- Larger balcony
+- Brighter bathroom
+- Bigger balcony
 - Better view
-- Keep similar design style
+- Quiet coastal area
+- Verified Wi-Fi
 
 ### Annotation
 
@@ -448,48 +449,32 @@ Explain Feedback Mode and how visual markup becomes structured search criteria.
 
 ---
 
-## Frame 6: Branch 4 / Circle-to-Bundle Trip Builder
+## Frame 6: Branch 4 / Future Concept: Mixed-Item Trip Builder
 
 ### Purpose
 
-Show multi-item selection on the trip canvas.
+Document a future concept rather than an active prototype frame.
 
 ### User Action
 
-The user circles a home, an experience, and a service, then says:
+The user could eventually circle a home, an experience, and a service and say:
 
 > Build the trip around these.
 
 ### Screen Content
 
-Show a canvas with multiple cards.
+This frame is optional and should be treated as a future exploration, not part of the current board.
 
-Three cards should be visibly circled:
+If shown, it can include:
 
-- Quiet Portugal Home
-- Coastal Food Walk
-- Grocery Delivery
-
-AI response:
-
-> Got it. I’ll build the July trip around these.
-
-Generated bundle summary:
-
-**Trip Option A**
-
-- Stay: Quiet Portugal Home
-- Experience: Coastal Food Walk
-- Service: Grocery Delivery
-
-CTAs:
-
-- Compare with other bundles
-- Save trip option
+- A mixed recommendation canvas
+- Multi-item lasso selection
+- AI-generated bundle summary
+- Compare / save trip option actions
 
 ### Annotation
 
-Explain that the user can create context visually instead of describing everything verbally.
+Explain that this is a possible future hyper-personalized trip-building mode, not part of the current prototype.
 
 ---
 
@@ -501,19 +486,15 @@ Show day-by-day trip editing.
 
 ### User Action
 
-The user taps:
+The user taps the Trip Brief, opens a saved itinerary from inside it, taps:
 
-> Review last trip
-
-Or says:
-
-> Show me what I did last July.
+> Remix this itinerary
 
 ### Screen Content
 
 Header:
 
-> Last July, remixed
+> Remixing last July
 
 Show a day-by-day itinerary.
 
@@ -528,32 +509,45 @@ Original itinerary:
 **Day 2**
 
 - Beach morning
+- Harbor food walk
 - Sunset boat tour
 
 **Day 3**
 
-- Food experience
+- Slow breakfast
+- Coastal swim
 - Free evening
 
 User command bubble:
 
-> Move the food walk to noon, remove the boat tour, and add something for the kids at 5.
+> Move the harbor food walk to noon, remove the sunset boat tour, and add something for the kids at 5.
 
 Updated itinerary:
 
 **Day 2**
 
 - Beach morning
-- Food walk at 12:00
-- Family activity at 17:00
+- Harbor food walk at 12:00
+- Kids beach club at 17:00
+- Sunset boat tour removed
 
 Include AI availability note:
 
 > I checked availability and found two family-friendly options that fit the new schedule.
 
+Then show one more conversational turn:
+
+User:
+
+> Actually, make the kids activity at 4 instead.
+
+AI:
+
+> Updated it. I moved the kids activity to 4 PM and kept the rest of the day the same.
+
 ### Annotation
 
-Explain that AI-native Airbnb handles the trip as a multi-day plan, not just a single listing search.
+Explain that AI-native Airbnb handles the trip as a live editable plan, not just a single listing search.
 
 ---
 

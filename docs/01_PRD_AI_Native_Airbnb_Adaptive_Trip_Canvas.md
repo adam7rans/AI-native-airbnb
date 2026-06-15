@@ -276,6 +276,8 @@ The user taps a home, experience, service, image, chip, or itinerary item.
 
 The user circles items on the canvas.
 
+This can be a future mixed-item trip-building mode rather than a required part of the current prototype.
+
 Example:
 
 Circle:
@@ -292,7 +294,7 @@ The user can also circle part of an image.
 
 Example:
 
-> I like this bathroom, but with a window.
+> I want a brighter bathroom.
 
 ### 8.5 Feedback
 
@@ -357,7 +359,6 @@ Quieter this year
 Lower budget
 Better for remote work
 Add family activities
-Review last trip
 ```
 
 ### Adaptive Canvas Cards
@@ -397,7 +398,7 @@ Used on your last July trip
 
 ---
 
-## 10. Root User Flow and Five Branches
+## 10. Root User Flow, Active Branches, and Future Concept
 
 All branches begin from the same root.
 
@@ -411,6 +412,28 @@ Adaptive Trip Canvas appears
 ↓
 User chooses how to steer the trip
 ```
+
+### Root Flow: Adaptive Trip Canvas Appears
+
+Flow:
+
+1. Returning user opens Airbnb in April.
+2. AI infers likely July seaside intent from seasonal behavior and past trips.
+3. Adaptive Trip Canvas appears before the user types anything.
+4. The first screen already contains a live Trip Brief, quick chips, and mixed recommendations.
+5. The user can scroll the generated canvas to inspect past favorites, new matches, experiences, and services.
+
+End state:
+
+> A personalized trip-planning surface appears immediately instead of blank search.
+
+Backend dependencies:
+
+- Seasonal intent detection
+- User Travel Memory
+- Mixed recommendation retrieval
+- Trip Brief generation
+- Reason-code generation
 
 ### Branch 1: Repeat Last Year
 
@@ -470,7 +493,7 @@ Backend dependencies:
 - Vector retrieval
 - Ranking with reason codes
 
-### Branch 3: Focus on One Home and Give Visual Feedback
+### Branch 3: Personalized Stay Detail
 
 User taps a home.
 
@@ -479,9 +502,35 @@ Flow:
 1. App enters Focus Mode.
 2. Listing detail surfaces personalized evidence first.
 3. User jumps to bathroom, balcony, workspace, Wi-Fi, or reviews.
-4. User circles image regions and gives spoken feedback.
-5. AI updates the Trip Brief.
-6. Canvas regenerates homes matching visual and semantic preferences.
+4. Personalized listing evidence answers this user's top questions first.
+
+End state:
+
+> Listing detail is reordered around what this specific user usually cares about.
+
+Backend dependencies:
+
+- Listing-detail personalization
+- User inspection analytics
+- Photo metadata
+- Amenity evidence ranking
+- Reason-code generation
+
+### Branch 3B: Draw-to-Search From Gallery
+
+User chooses:
+
+> Draw on screen.
+
+Flow:
+
+1. User opens a home's photo gallery from the personalized listing detail view.
+2. User taps the plus menu in the gallery and enables Draw on screen.
+3. Draw mode activates inside the gallery itself.
+4. User taps voice mode, circles one photo, and says what should change.
+5. User circles another photo while continuing the same voice note.
+6. User exits voice mode and AI begins searching from the combined visual + spoken feedback.
+7. Canvas regenerates homes matching the updated preferences.
 
 End state:
 
@@ -492,13 +541,17 @@ Backend dependencies:
 - Photo metadata
 - Multimodal embeddings
 - Image region understanding
-- User inspection analytics
+- Live voice + draw state handling
 - Vector search over image attributes
 - Trip Brief update service
 
-### Branch 4: Circle Multiple Items to Build a Trip Bundle
+### Branch 4: Future Concept — Mixed-Item Trip Builder
 
-User circles:
+This is no longer part of the active prototype flow.
+
+Instead, it is a future concept for a more AI-native planning surface where the app could show a personalized mix of homes, experiences, and services together and let the user compose a trip visually.
+
+Possible interaction:
 
 - Home
 - Experience
@@ -518,7 +571,7 @@ Flow:
 
 End state:
 
-> AI-built home + experience + service trip option.
+> AI-built home + experience + service trip option from a future mixed trip-building mode.
 
 Backend dependencies:
 
@@ -531,21 +584,24 @@ Backend dependencies:
 
 ### Branch 5: Review and Remix Itinerary
 
-User chooses:
+User begins from the main canvas by opening the Trip Brief and then choosing:
 
-> Review last trip.
+> Open itinerary.
 
 Flow:
 
-1. Airbnb opens the previous trip day by day.
-2. User edits activities, timing, services, or rhythm.
-3. AI updates the itinerary.
-4. System checks availability and conflicts.
-5. New trip plan appears.
+1. User expands the Trip Brief and opens a saved itinerary from inside it.
+2. Airbnb opens the previous trip as a timed, day-by-day plan.
+3. User reviews the itinerary before editing.
+4. User taps Remix this itinerary to enter editing mode.
+5. User enters voice mode and says: "Move the harbor food walk to noon, remove the sunset boat tour, and add something for the kids at 5."
+6. AI updates the itinerary in place and keeps voice mode active.
+7. User makes one more spoken edit.
+8. AI updates the same day again while preserving the previous changes.
 
 End state:
 
-> Remixed day-by-day itinerary.
+> Remixed day-by-day itinerary that behaves like a live editable object.
 
 Backend dependencies:
 
@@ -636,10 +692,13 @@ The Figma / coded mockup should show:
 2. Repeat last year flow
 3. Same trip but better flow
 4. Focus Mode on one home
-5. Visual Feedback Mode
-6. Circle-to-bundle interaction
-7. Itinerary remix mode
-8. Regenerated canvas after feedback
+5. Draw-to-search / Visual Feedback Mode
+6. Itinerary remix mode
+7. Regenerated canvas after feedback
+
+Optional future concept to document separately:
+
+- Mixed-item trip builder (home + experience + service bundle composition)
 
 All data can be mocked.
 
@@ -678,4 +737,4 @@ The design succeeds if evaluators understand:
 
 ## 17. One-Sentence Concept
 
-Airbnb's AI-native home screen becomes an Adaptive Trip Canvas where returning users can remix past trips, inspect homes through personalized data, mark up what they like or dislike, and regenerate homes, experiences, services, or full itineraries around a live Trip Brief.
+Airbnb's AI-native home screen becomes an Adaptive Trip Canvas where returning users can revisit past trips, inspect homes through personalized data, mark up what they like or dislike, and regenerate homes or itineraries around a live Trip Brief, with future potential for mixed-item trip building.

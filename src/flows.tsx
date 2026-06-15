@@ -52,7 +52,7 @@ export const FLOWS: Flow[] = [
       "Ingests years of in-app behavior — searches, listing views, photo inspections, bookings, and timing patterns — to build a user travel profile. Detects that Alex plans a July coastal trip every spring, then auto-generates a canvas of past favorites, new matches, experiences, and services, each with a 'why it fits' explanation and a live Trip Brief.",
     whyMatters:
       "Airbnb opens as a planning agent, not a blank search box. Instead of starting from an empty query, the first screen is a generated trip built from real behavioral data — showing the user that the app already understands what they want.",
-    prdSection: { label: "§5 Example Scenario", anchor: "#5-example-scenario" },
+    prdSection: { label: "§10 Root Flow: Adaptive Trip Canvas Appears", anchor: "#root-flow-adaptive-trip-canvas-appears" },
     steps: [
       {
         action: "Open",
@@ -164,7 +164,7 @@ export const FLOWS: Flow[] = [
     aiBehavior:
       "Analyzes years of listing-browsing behavior — which sections the user scrolls to first, which photos they zoom into, which amenity filters they toggle — to build a per-user priority model. Reorders the detail page so the user's top concerns (Wi-Fi, workspace, quiet, balcony) appear first, with a 'Why this fits' summary and quick jumps.",
     whyMatters: "The detail page answers this user's specific questions immediately, instead of making them scroll past irrelevant information. Every listing feels like it was written for them.",
-    prdSection: { label: "§10 Branch 3: Focus on One Home", anchor: "#branch-3-focus-on-one-home-and-give-visual-feedback" },
+    prdSection: { label: "§10 Branch 3: Personalized Stay Detail", anchor: "#branch-3-personalized-stay-detail" },
     steps: [
       {
         action: "Tap",
@@ -204,7 +204,7 @@ export const FLOWS: Flow[] = [
     aiBehavior:
       "Watches the user's drawn circles in real-time alongside their spoken input. Converts visual markup + speech into structured search constraints (brighter bathroom, larger balcony, better view) and regenerates matching homes.",
     whyMatters: "Users react to what they see instead of describing everything in words. The AI turns a gesture and a sentence into precise search criteria.",
-    prdSection: { label: "§10 Branch 3: Visual Feedback", anchor: "#branch-3-focus-on-one-home-and-give-visual-feedback" },
+    prdSection: { label: "§10 Branch 3B: Draw-to-Search From Gallery", anchor: "#branch-3b-draw-to-search-from-gallery" },
     steps: [
       {
         action: "Tap",

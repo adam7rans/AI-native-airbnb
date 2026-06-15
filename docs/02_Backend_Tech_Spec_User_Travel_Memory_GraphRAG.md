@@ -109,7 +109,7 @@ The backend must support these frontend capabilities from the PRD:
 4. Improve last year's trip around qualitative changes like quieter, cheaper, or better Wi-Fi.
 5. Personalize listing detail pages based on what the user usually inspects.
 6. Let the user circle images and convert visual feedback into search criteria.
-7. Let the user circle multiple items and generate a trip bundle.
+7. Optionally support a future mixed-item trip builder that bundles homes, experiences, and services together.
 8. Let the user review and remix a past itinerary.
 9. Keep a live Trip Brief synchronized with every interaction.
 10. Explain recommendations using evidence without exposing creepy raw analytics.
@@ -546,7 +546,7 @@ GraphRAG is especially useful for:
 
 This section ties the backend architecture directly to the PRD flows.
 
-See PRD: [Root User Flow and Five Branches](./01_PRD_AI_Native_Airbnb_Adaptive_Trip_Canvas.md#10-root-user-flow-and-five-branches)
+See PRD: [Root User Flow, Active Branches, and Future Concept](./01_PRD_AI_Native_Airbnb_Adaptive_Trip_Canvas.md#10-root-user-flow-active-branches-and-future-concept)
 
 ### 13.1 Root Flow: Adaptive Trip Canvas Appears
 
@@ -664,24 +664,21 @@ Rerank results
 Return regenerated canvas
 ```
 
-### 13.4 Branch 3: Focus Mode + Visual Feedback
+### 13.4 Branch 3: Focus Mode on One Home
 
 Frontend behavior:
 
-User taps a home, opens gallery, circles a bathroom, and says:
-
-> I like this bathroom, but I want one with a window.
+User taps a home and opens a personalized listing detail view where the evidence most relevant to that user appears first.
 
 Backend services required:
 
 | Frontend Element | Backend Capability |
 |---|---|
 | Personalized listing highlights | User inspection analytics + listing evidence |
-| Bathroom quick jump | Photo classification |
-| Circled image region | Image region capture |
-| “Bathroom with window” | Multimodal understanding + structured preference extraction |
-| Regenerated homes | Image/text vector search + ranking |
-| Updated Trip Brief chips | Trip Brief mutation |
+| Ordered detail sections | Listing-detail personalization |
+| Bathroom / balcony / workspace jumps | Photo classification |
+| Why-this-fits summary | Reason-code generator |
+| User-specific evidence priority | Preference inference from browsing behavior |
 
 Backend flow:
 
@@ -691,6 +688,35 @@ Open home detail
 Fetch user inspection priorities
 ↓
 Order listing evidence by user relevance
+↓
+Return personalized listing detail
+```
+
+### 13.5 Branch 3B: Draw-to-Search From Gallery
+
+Frontend behavior:
+
+User opens the gallery, taps the plus menu, enables Draw on screen, circles a bathroom and balcony, and says:
+
+> I want a brighter bathroom. And on this photo, I want a bigger balcony and better view.
+
+Backend services required:
+
+| Frontend Element | Backend Capability |
+|---|---|
+| Gallery draw mode | Image region capture |
+| Continuous voice note | Streaming speech-to-text + utterance grouping |
+| Circled image region | Multimodal region understanding |
+| Structured visual preference extraction | Multimodal understanding + parser |
+| Regenerated homes | Image/text vector search + ranking |
+| Updated Trip Brief chips | Trip Brief mutation |
+
+Backend flow:
+
+```text
+Open gallery
+↓
+Enable draw mode
 ↓
 Receive image region + spoken feedback
 ↓
@@ -703,7 +729,9 @@ Retrieve homes matching visual criteria
 Return regenerated results
 ```
 
-### 13.5 Branch 4: Circle-to-Bundle Trip Builder
+### 13.6 Branch 4: Future Concept — Mixed-Item Trip Builder
+
+This is a future capability, not part of the active frontend board.
 
 Frontend behavior:
 
@@ -740,24 +768,28 @@ Generate explanation
 Return bundle card
 ```
 
-### 13.6 Branch 5: Itinerary Remix
+### 13.7 Branch 5: Itinerary Remix
 
 Frontend behavior:
 
-User opens last trip and says:
+User opens a saved itinerary from the Trip Brief, taps Remix this itinerary, and says:
 
-> Move the food walk to noon, remove the boat tour, and add something for the kids at 5.
+> Move the harbor food walk to noon, remove the sunset boat tour, and add something for the kids at 5.
+
+Then the user makes one more spoken edit while voice mode remains active.
 
 Backend services required:
 
 | Frontend Element | Backend Capability |
 |---|---|
+| Trip Brief entry point | Canvas state + past-trip linkage |
 | Past itinerary | Trip reconstruction |
 | Day-by-day schedule | Itinerary data model |
 | Natural language edit | LLM intent parser |
 | Availability checks | Experience/service scheduling |
 | Conflict detection | Calendar/time logic |
 | Updated itinerary | Trip plan mutation |
+| Follow-up spoken edit | Conversation state + itinerary diffing |
 | AI availability note | Explanation generator |
 
 Backend flow:
@@ -922,7 +954,7 @@ Example:
 
 User circles bathroom and says:
 
-> I like this bathroom, but with a skylight.
+> I want a brighter bathroom.
 
 The system creates:
 
@@ -930,7 +962,7 @@ The system creates:
 {
   "target": "bathroom",
   "positive_attributes": ["similar style"],
-  "required_changes": ["natural light", "window", "skylight"],
+  "required_changes": ["brighter", "more natural light"],
   "negative_attributes": []
 }
 ```
