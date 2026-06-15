@@ -47,8 +47,7 @@ reads at a glance with no interaction required.
 | 2 | Same trip, but better | Tap → **Choose** → Result → Scroll |
 | 3 | Focus mode on one home | Tap → Result → Scroll |
 | 3B | Visual feedback | Tap → Result → Tap → Tap → Result → Tap → Draw → Draw → Tap → Result → Result → Scroll |
-| 4 | Circle-to-bundle | Open → Draw → Result |
-| 5 | Itinerary remix | Open → Voice → Result |
+| 5 | Itinerary remix | Tap → Result → Tap → Result → Tap → Result → Tap → Voice → Result → Voice → Result |
 
 ## Run
 

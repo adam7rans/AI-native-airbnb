@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Edit, Sparkle, Check } from "./Icons";
 
 interface Props {
@@ -6,6 +7,8 @@ interface Props {
   updated?: string[]; // items rendered as "newly added/changed"
   compact?: boolean;
   note?: string;
+  expandedContent?: ReactNode;
+  ctaLabel?: string;
 }
 
 export default function TripBrief({
@@ -14,6 +17,8 @@ export default function TripBrief({
   updated = [],
   compact = false,
   note,
+  expandedContent,
+  ctaLabel,
 }: Props) {
   return (
     <div className="rounded-3xl border border-coral-100 bg-gradient-to-b from-coral-50/80 to-white p-4 shadow-sm">
@@ -72,6 +77,14 @@ export default function TripBrief({
       )}
 
       {note && <p className="mt-3 text-[12px] leading-relaxed text-ink-500">{note}</p>}
+
+      {expandedContent && <div className="mt-3">{expandedContent}</div>}
+
+      {ctaLabel && (
+        <button className="mt-4 w-full rounded-full bg-coral-500 py-3 text-[13px] font-bold text-white">
+          {ctaLabel}
+        </button>
+      )}
     </div>
   );
 }

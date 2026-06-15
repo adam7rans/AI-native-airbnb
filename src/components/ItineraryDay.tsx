@@ -5,7 +5,7 @@ type ItemState = "kept" | "moved" | "added" | "removed";
 interface SimpleDay {
   day: string;
   label: string;
-  items: string[];
+  items: Array<string | { time: string; text: string }>;
 }
 interface RichItem {
   time: string;
@@ -43,10 +43,18 @@ export function ItineraryDay({ day }: { day: SimpleDay }) {
       </div>
       <div className="mt-3 space-y-2.5">
         {day.items.map((it) => (
-          <div key={it} className="flex items-center gap-2 text-[14px] text-ink-700">
-            <span className="h-1.5 w-1.5 rounded-full bg-ink-300" />
-            {it}
-          </div>
+          typeof it === "string" ? (
+            <div key={it} className="flex items-center gap-2 text-[14px] text-ink-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-ink-300" />
+              {it}
+            </div>
+          ) : (
+            <div key={`${it.time}-${it.text}`} className="flex items-center gap-2 text-[14px] text-ink-700">
+              <span className="w-11 text-[12px] font-bold text-ink-900">{it.time}</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-ink-300" />
+              <span>{it.text}</span>
+            </div>
+          )
         ))}
       </div>
     </div>

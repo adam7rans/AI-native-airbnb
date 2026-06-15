@@ -31,6 +31,7 @@ import {
   BUNDLE_CARDS,
   ITINERARY_ORIGINAL,
   ITINERARY_UPDATED,
+  ITINERARY_UPDATED_FOLLOWUP,
   REGEN_CARDS,
   REGEN_CHIPS,
   IMAGES,
@@ -39,7 +40,13 @@ import {
 const SHELL = "w-[393px] bg-white pb-28";
 
 /* ── Root: Adaptive Trip Canvas ─────────────────────────────── */
-export function CanvasScreen({ activeChip }: { activeChip?: string }) {
+export function CanvasScreen({
+  activeChip,
+  tripBriefExpanded = false,
+}: {
+  activeChip?: string;
+  tripBriefExpanded?: boolean;
+}) {
   return (
     <div className={SHELL}>
       <TopNav />
@@ -50,7 +57,38 @@ export function CanvasScreen({ activeChip }: { activeChip?: string }) {
       />
       <QuickChipRow chips={QUICK_CHIPS} active={activeChip} />
       <div className="px-5 pt-5">
-        <TripBrief title={TRIP_BRIEF.title} items={TRIP_BRIEF.items.slice(0, 5)} compact />
+        <TripBrief
+          title={TRIP_BRIEF.title}
+          items={
+            tripBriefExpanded
+              ? ["3 days", "Coastal or seaside", "Quiet area", "Strong Wi-Fi", "Real workspace"]
+              : TRIP_BRIEF.items.slice(0, 5)
+          }
+          compact
+          expandedContent={
+            tripBriefExpanded ? (
+              <div className="rounded-2xl border border-black/5 bg-white p-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="inline-flex items-center gap-1 rounded-full bg-coral-50 px-2 py-0.5 text-[11px] font-semibold text-coral-600">
+                      <Sparkle className="h-3 w-3" /> Past trip
+                    </div>
+                    <div className="mt-2 text-[15px] font-extrabold text-ink-900">
+                      Last July itinerary
+                    </div>
+                    <div className="mt-1 text-[12px] leading-relaxed text-ink-500">
+                      Open the day-by-day plan, then remix it with voice.
+                    </div>
+                  </div>
+                  <div className="rounded-2xl bg-coral-50 px-2.5 py-1.5 text-[11px] font-semibold text-coral-600">
+                    3 days
+                  </div>
+                </div>
+              </div>
+            ) : undefined
+          }
+          ctaLabel={tripBriefExpanded ? "Open itinerary" : undefined}
+        />
       </div>
       <SectionTitle action="Refresh">Your trip canvas</SectionTitle>
       <div className="space-y-4 px-5">
@@ -612,7 +650,11 @@ export function BundleScreen({
 }
 
 /* ── Branch 5: itinerary remix ──────────────────────────────── */
-export function ItineraryScreen({ stage }: { stage: "original" | "command" | "updated" }) {
+export function ItineraryScreen({
+  stage,
+}: {
+  stage: "review" | "remixReady" | "command" | "updated" | "followup" | "updatedAgain";
+}) {
   return (
     <div className={SHELL}>
       <div className="px-5 pt-1">
@@ -620,13 +662,17 @@ export function ItineraryScreen({ stage }: { stage: "original" | "command" | "up
           <Sparkle className="h-3.5 w-3.5" /> Itinerary remix
         </span>
         <h1 className="mt-2.5 text-[24px] leading-tight font-extrabold tracking-tight text-ink-900">
-          Last July, remixed
+          {stage === "review" ? "Last July itinerary" : "Remixing last July"}
         </h1>
-        <p className="mt-1 text-[13px] text-ink-500">Your trip as an editable day-by-day plan.</p>
+        <p className="mt-1 text-[13px] text-ink-500">
+          {stage === "review"
+            ? "Review the trip day by day before making changes."
+            : "Your trip as an editable day-by-day plan."}
+        </p>
       </div>
       <div className="px-5 pt-3">
         <div className="mb-2 text-[12px] font-bold tracking-wide text-ink-500 uppercase">
-          Original itinerary
+          {stage === "review" ? "Saved itinerary" : "Original itinerary"}
         </div>
         <div className="space-y-3">
           {ITINERARY_ORIGINAL.map((d) => (
@@ -634,15 +680,22 @@ export function ItineraryScreen({ stage }: { stage: "original" | "command" | "up
           ))}
         </div>
       </div>
-      {stage !== "original" && (
+      {stage === "review" && (
+        <div className="px-5 pt-4">
+          <button className="w-full rounded-full bg-coral-500 py-3 text-[13px] font-bold text-white">
+            Remix this itinerary
+          </button>
+        </div>
+      )}
+      {stage !== "review" && stage !== "remixReady" && (
         <div className="px-5 pt-4">
           <UserBubble voice>
-            Move the food walk to noon, remove the boat tour, and add something for the kids
-            at 5.
+            Move the harbor food walk to noon, remove the sunset boat tour, and add something
+            for the kids at 5.
           </UserBubble>
         </div>
       )}
-      {stage === "updated" && (
+      {(stage === "updated" || stage === "followup" || stage === "updatedAgain") && (
         <>
           <div className="px-5 pt-3">
             <div className="mb-2 text-[12px] font-bold tracking-wide text-coral-600 uppercase">
@@ -656,10 +709,36 @@ export function ItineraryScreen({ stage }: { stage: "original" | "command" | "up
           </div>
           <div className="px-5 pt-3">
             <AIBubble>
-              <span className="inline-flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-emerald-500" />I checked availability and found
-                two family-friendly options that fit the new schedule.
-              </span>
+              Done. I moved the harbor food walk to noon, removed the sunset boat tour, and
+              added a kids activity at 5 PM.
+            </AIBubble>
+          </div>
+        </>
+      )}
+      {stage === "followup" && (
+        <div className="px-5 pt-3">
+          <UserBubble voice>Actually, make the kids activity at 4 instead.</UserBubble>
+        </div>
+      )}
+      {stage === "updatedAgain" && (
+        <>
+          <div className="px-5 pt-3">
+            <UserBubble voice>Actually, make the kids activity at 4 instead.</UserBubble>
+          </div>
+          <div className="px-5 pt-3">
+            <div className="mb-2 text-[12px] font-bold tracking-wide text-coral-600 uppercase">
+              Updated again
+            </div>
+            <ItineraryDayRich
+              day={ITINERARY_UPDATED_FOLLOWUP.day}
+              label={ITINERARY_UPDATED_FOLLOWUP.label}
+              items={ITINERARY_UPDATED_FOLLOWUP.items}
+            />
+          </div>
+          <div className="px-5 pt-3">
+            <AIBubble>
+              Updated it. I moved the kids activity to 4 PM and kept the rest of the day the
+              same.
             </AIBubble>
           </div>
         </>

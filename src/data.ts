@@ -288,17 +288,29 @@ export const ITINERARY_ORIGINAL = [
   {
     day: "Day 1",
     label: "Arrival",
-    items: ["Airport pickup", "Check-in", "Grocery delivery"],
+    items: [
+      { time: "15:00", text: "Airport pickup" },
+      { time: "16:00", text: "Check-in" },
+      { time: "18:00", text: "Grocery delivery" },
+    ],
   },
   {
     day: "Day 2",
     label: "Beach day",
-    items: ["Beach morning", "Sunset boat tour"],
+    items: [
+      { time: "09:00", text: "Beach morning" },
+      { time: "14:00", text: "Harbor food walk" },
+      { time: "19:00", text: "Sunset boat tour" },
+    ],
   },
   {
     day: "Day 3",
     label: "Food + rest",
-    items: ["Food experience", "Free evening"],
+    items: [
+      { time: "10:00", text: "Slow breakfast" },
+      { time: "13:00", text: "Coastal swim" },
+      { time: "20:00", text: "Free evening" },
+    ],
   },
 ];
 
@@ -307,8 +319,20 @@ export const ITINERARY_UPDATED = {
   label: "Beach day, remixed",
   items: [
     { time: "09:00", text: "Beach morning", state: "kept" as const },
-    { time: "12:00", text: "Food walk", state: "moved" as const },
-    { time: "17:00", text: "Family activity", state: "added" as const },
+    { time: "12:00", text: "Harbor food walk", state: "moved" as const },
+    { time: "17:00", text: "Kids beach club", state: "added" as const },
+    { time: "19:00", text: "Sunset boat tour", state: "removed" as const },
+  ],
+};
+
+export const ITINERARY_UPDATED_FOLLOWUP = {
+  day: "Day 2",
+  label: "Beach day, refined again",
+  items: [
+    { time: "09:00", text: "Beach morning", state: "kept" as const },
+    { time: "12:00", text: "Harbor food walk", state: "moved" as const },
+    { time: "16:00", text: "Kids beach club", state: "moved" as const },
+    { time: "19:00", text: "Sunset boat tour", state: "removed" as const },
   ],
 };
 
