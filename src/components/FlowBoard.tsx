@@ -142,11 +142,11 @@ function BranchSummary({ flow }: { flow: Flow }) {
   );
 }
 
-export default function FlowBoard({ flow }: { flow: Flow }) {
+export default function FlowBoard({ flow, figmaExport }: { flow: Flow; figmaExport?: boolean }) {
   return (
     <section className="flex flex-col gap-6 xl:flex-row xl:items-start">
       <BranchSummary flow={flow} />
-      <div className="custom-scrollbar flex items-stretch overflow-x-auto pb-4 pr-8">
+      <div className={figmaExport ? "flex items-stretch pb-4 pr-8" : "custom-scrollbar flex items-stretch overflow-x-auto pb-4 pr-8"}>
         {flow.steps.map((step, i) => (
           <div key={i} className="flex items-stretch">
             {i > 0 && <FlowArrow />}
