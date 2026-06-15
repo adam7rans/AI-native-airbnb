@@ -58,6 +58,8 @@ function StepFrame({ step, index }: { step: Step; index: number }) {
         scrollHint={step.scrollHint}
         input={step.input}
         tap={step.tap}
+        contentTopInset={step.frame?.contentTopInset}
+        transparentStatusBar={step.frame?.transparentStatusBar}
       >
         {step.screen}
       </DeviceFrame>
@@ -67,6 +69,8 @@ function StepFrame({ step, index }: { step: Step; index: number }) {
 }
 
 function BranchSummary({ flow }: { flow: Flow }) {
+  const summaryParagraphs = flow.summary.split("\n\n");
+
   return (
     <div className="w-[320px] shrink-0 self-start p-5">
       <div className="mb-3 flex items-center gap-2">
@@ -80,7 +84,11 @@ function BranchSummary({ flow }: { flow: Flow }) {
       <h3 className="text-[19px] leading-tight font-extrabold tracking-tight text-ink-900">
         {flow.title}
       </h3>
-      <p className="mt-2 text-[13px] leading-relaxed text-ink-700">{flow.summary}</p>
+      <div className="mt-2 space-y-3 text-[13px] leading-relaxed text-ink-700">
+        {summaryParagraphs.map((paragraph, i) => (
+          <p key={i}>{paragraph}</p>
+        ))}
+      </div>
 
       <div className="mt-4 space-y-3 border-t border-black/5 pt-4">
         <div className="text-[11px] font-bold tracking-wide text-coral-600 uppercase">

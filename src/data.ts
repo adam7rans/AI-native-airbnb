@@ -20,6 +20,8 @@ export const IMAGES = {
   bathroomBright: img("1620626011761-996317b8d101"),
   balcony: img("1507089947368-19c1da9775ae"),
   balconyBig: img("1566073771259-6a8506099945"),
+  galleryBathroom: img("1721564130772-c9ee561ab87b"),
+  galleryBalcony: img("1719465263924-eff2bd34fa6c"),
   workspace: img("1486946255434-2466348c2166"),
   bedroom: img("1560448204-e02f11c3d0e2"),
   livingRoom: img("1502005097973-6a7082348e28"),
@@ -198,21 +200,21 @@ export const QUIETER_BRIEF = [
 
 // Frame 4 — focus mode listing
 export const FOCUS_HOME = {
-  title: "Pine Coast Home",
-  location: "Istria, Croatia",
-  image: IMAGES.pineCoast,
-  rating: 4.97,
-  reviews: 128,
-  price: "$184",
+  title: "Casa Mare",
+  location: "Dalmatia, Croatia",
+  image: IMAGES.casaMare,
+  rating: 4.96,
+  reviews: 214,
+  price: "$210",
   highlights: [
-    { icon: "wifi", label: "Verified Wi-Fi", detail: "320 Mbps · tested" },
-    { icon: "desk", label: "Real workspace", detail: "Standing desk + monitor" },
-    { icon: "quiet", label: "Quiet area", detail: "No nightlife within 2 km" },
-    { icon: "balcony", label: "Balcony, sea view", detail: "South-facing" },
-    { icon: "walk", label: "8-min walk to water", detail: "Calm cove" },
-    { icon: "match", label: "Like your Croatia stay", detail: "94% match" },
+    { icon: "wifi", label: "Verified Wi-Fi", detail: "280 Mbps · tested" },
+    { icon: "desk", label: "Real workspace", detail: "Dedicated desk + monitor" },
+    { icon: "quiet", label: "Quiet area", detail: "No nightlife within 1.5 km" },
+    { icon: "balcony", label: "Balcony, sea view", detail: "West-facing sunset" },
+    { icon: "walk", label: "5-min walk to water", detail: "Rocky cove beach" },
+    { icon: "match", label: "Stayed here twice", detail: "97% match" },
   ],
-  jumps: ["Bathroom", "Workspace", "Balcony", "Wi-Fi reviews", "Quietness"],
+  jumps: ["Wi-Fi reviews", "Workspace", "Balcony & view", "Quiet area", "Walk to water"],
 };
 
 // Frame 6 — circle to bundle
@@ -312,7 +314,7 @@ export const ITINERARY_UPDATED = {
 
 // Frame 8 — regenerated results
 export const REGEN_CHIPS = [
-  "Bathroom with window",
+  "Brighter bathroom",
   "Larger balcony",
   "Verified Wi-Fi",
   "Quiet coastal area",
@@ -350,7 +352,7 @@ export const REGEN_CARDS: RecCard[] = [
 
 // Frame 5 — visual feedback updated brief
 export const FEEDBACK_BRIEF = [
-  "Bathroom with window/skylight",
+  "Brighter bathroom",
   "Larger balcony",
   "Better view",
   "Keep similar design style",

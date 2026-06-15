@@ -17,9 +17,17 @@ interface Props {
   input?: { placeholder?: string; listening?: boolean } | null;
   tap?: TapHint;
   scrollHint?: number; // 0..1 scroll position for the side indicator (omit to hide)
+  contentTopInset?: number;
+  transparentStatusBar?: boolean;
 }
 
-function StatusBar({ scrolled }: { scrolled?: boolean }) {
+function StatusBar({
+  scrolled,
+  transparent = false,
+}: {
+  scrolled?: boolean;
+  transparent?: boolean;
+}) {
   return (
     <>
       {scrolled ? (
@@ -44,9 +52,9 @@ function StatusBar({ scrolled }: { scrolled?: boolean }) {
             />
           ))}
         </>
-      ) : (
+      ) : !transparent ? (
         <div className="absolute top-0 right-0 left-0 z-[29] h-11 bg-white" />
-      )}
+      ) : null}
       <div className="absolute top-0 right-0 left-0 z-30 h-11">
         <div className="flex h-11 items-center justify-between px-6 pt-1 text-[13px] font-semibold text-ink-900">
           <span>9:41</span>
@@ -91,6 +99,8 @@ export default function DeviceFrame({
   input,
   tap,
   scrollHint,
+  contentTopInset = 44,
+  transparentStatusBar = false,
 }: Props) {
   return (
     <div style={{ width: W * scale, height: H * scale }} className="shrink-0">
@@ -101,10 +111,10 @@ export default function DeviceFrame({
         <div className="relative h-full w-full overflow-hidden rounded-[52px] bg-white ring-1 ring-black/10 shadow-[0_22px_50px_-22px_rgba(0,0,0,0.45)]">
           {/* body (clipped, translated to simulate scroll) */}
           <div className="absolute inset-x-0 top-0" style={{ transform: `translateY(${-scrollY}px)` }}>
-            <div className="pt-11">{children}</div>
+            <div style={{ paddingTop: contentTopInset }}>{children}</div>
           </div>
 
-          <StatusBar scrolled={scrollY > 0} />
+          <StatusBar scrolled={scrollY > 0} transparent={transparentStatusBar} />
 
           {/* scroll position indicator — handle only, no track */}
           {scrollHint !== undefined && (

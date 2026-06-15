@@ -16,6 +16,8 @@ import {
   Sparkle,
   Check,
   Lasso,
+  Edit as PenIcon,
+  Mic,
   ChevronRight,
 } from "../components/Icons";
 import {
@@ -31,7 +33,6 @@ import {
   ITINERARY_UPDATED,
   REGEN_CARDS,
   REGEN_CHIPS,
-  FEEDBACK_BRIEF,
   IMAGES,
 } from "../data";
 
@@ -320,29 +321,137 @@ export function FocusScreen() {
   );
 }
 
-/* ── Branch 3B: visual feedback gallery ─────────────────────── */
-export function GalleryScreen({ step }: { step: 0 | 1 | 2 | 3 }) {
+function GalleryMenu({ drawHighlighted = false }: { drawHighlighted?: boolean }) {
   return (
-    <div className={SHELL}>
-      <div className="px-5 pt-1">
-        <div className="flex items-center justify-between">
-          <h1 className="text-[20px] font-extrabold tracking-tight text-ink-900">Feedback mode</h1>
-          <span className="inline-flex items-center gap-1 rounded-full bg-coral-500 px-2.5 py-1 text-[11px] font-semibold text-white">
-            <Lasso className="h-3.5 w-3.5" /> Circle to react
+    <div className="absolute bottom-[94px] left-5 z-30 w-48 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_12px_40px_-8px_rgba(0,0,0,0.25)]">
+      <button
+        className={`flex w-full items-center gap-3 px-4 py-3 text-left ${
+          drawHighlighted ? "bg-coral-50" : ""
+        }`}
+      >
+        <PenIcon className={`h-5 w-5 ${drawHighlighted ? "text-coral-600" : "text-ink-500"}`} />
+        <span
+          className={`text-[14px] font-medium ${
+            drawHighlighted ? "font-semibold text-coral-700" : "text-ink-700"
+          }`}
+        >
+          Draw on screen
+        </span>
+      </button>
+      <button className="flex w-full items-center gap-3 px-4 py-3 text-left">
+        <Mic className="h-5 w-5 text-ink-500" />
+        <span className="text-[14px] font-medium text-ink-700">Voice message</span>
+      </button>
+      <button className="flex w-full items-center gap-3 px-4 py-3 text-left">
+        <svg
+          className="h-5 w-5 text-ink-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"
+          />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z"
+          />
+        </svg>
+        <span className="text-[14px] font-medium text-ink-700">Camera</span>
+      </button>
+    </div>
+  );
+}
+
+function GalleryHeader({
+  drawMode = false,
+  showHint = false,
+}: {
+  drawMode?: boolean;
+  showHint?: boolean;
+}) {
+  return (
+    <div className={drawMode ? "px-5 pt-0" : "px-5 pt-1"}>
+      {drawMode && (
+        <div className="mb-0.5 flex justify-center">
+          <span className="inline-flex items-center gap-1 rounded-full bg-coral-500 px-3 py-1.5 text-[11px] font-semibold text-white shadow-[0_8px_24px_-10px_rgba(255,56,92,0.9)]">
+            <Lasso className="h-3.5 w-3.5" /> Draw mode
           </span>
         </div>
-        <p className="mt-1 text-[13px] text-ink-500">Pine Coast Home · gallery</p>
+      )}
+
+      <div className="relative flex items-center justify-between">
+        <button className="flex h-9 w-9 items-center justify-center rounded-full bg-black/[0.04] text-ink-900">
+          <ChevronRight className="h-5 w-5 rotate-180" />
+        </button>
+        <div className="text-center">
+          <h1 className="text-[17px] font-extrabold tracking-tight text-ink-900">Casa Mare</h1>
+          <p className="text-[12px] text-ink-500">1 / 24 photos</p>
+        </div>
+        <button className="flex h-9 w-9 items-center justify-center rounded-full bg-black/[0.04] text-ink-900">
+          <Heart className="h-[18px] w-[18px]" />
+        </button>
       </div>
+
+      {showHint && (
+        <p className="mt-3 text-center text-[13px] text-ink-500">
+          Circle anything on screen and speak or type to search
+        </p>
+      )}
+    </div>
+  );
+}
+
+function SearchProgressCard() {
+  return (
+    <div className="mt-3 flex justify-center px-5">
+      <div className="w-full max-w-[270px] rounded-[28px] border border-coral-100 bg-gradient-to-b from-coral-50 to-white px-5 py-4 text-center shadow-[0_16px_40px_-22px_rgba(255,56,92,0.4)]">
+        <div className="text-[13px] font-semibold text-coral-600">Airbnb AI</div>
+        <div className="mt-1.5 text-[16px] leading-snug font-bold text-ink-900">
+          Finding homes that match your updates
+        </div>
+        <div className="mt-1 text-[12px] leading-relaxed text-ink-500">
+          Searching for brighter bathrooms, bigger balconies, and better views.
+        </div>
+        <div className="mt-3 flex items-center justify-center gap-1.5 text-coral-500">
+          <span className="h-2 w-2 rounded-full bg-current animate-pulse [animation-delay:0ms]" />
+          <span className="h-2 w-2 rounded-full bg-current animate-pulse [animation-delay:180ms]" />
+          <span className="h-2 w-2 rounded-full bg-current animate-pulse [animation-delay:360ms]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Branch 3B: visual feedback gallery ─────────────────────── */
+export function GalleryScreen({
+  step,
+  drawMode = false,
+  menuOpen = false,
+  drawHighlighted = false,
+}: {
+  step: 0 | 1 | 2 | 3;
+  drawMode?: boolean;
+  menuOpen?: boolean;
+  drawHighlighted?: boolean;
+}) {
+  return (
+    <div className="relative w-[393px] bg-white pb-28" style={{ minHeight: 808 }}>
+      <GalleryHeader drawMode={drawMode} showHint={drawMode && step === 0} />
       <div className="mt-3 grid grid-cols-2 gap-2 px-5">
         <GalleryFeedbackImage
-          src={IMAGES.bathroom}
+          src={IMAGES.galleryBathroom}
           alt="Bathroom"
           circled={step >= 1}
-          note="Want a window"
+          note="Brighter bathroom"
           className="h-40"
         />
         <GalleryFeedbackImage
-          src={IMAGES.balcony}
+          src={IMAGES.galleryBalcony}
           alt="Balcony"
           circled={step >= 2}
           note="Bigger + better view"
@@ -352,26 +461,22 @@ export function GalleryScreen({ step }: { step: 0 | 1 | 2 | 3 }) {
         <GalleryFeedbackImage src={IMAGES.livingRoom} alt="Living room" className="h-28" />
       </div>
       <div className="mt-4 space-y-2 px-5">
-        {step >= 1 && <UserBubble voice>I like this bathroom, but with natural light.</UserBubble>}
-        {step >= 2 && <UserBubble voice>Bigger balcony, better view.</UserBubble>}
+        {step === 1 && <UserBubble voice>I want a brighter bathroom.</UserBubble>}
+        {step >= 2 && (
+          <UserBubble voice>
+            I want a brighter bathroom, and on this photo, I want a bigger balcony and better
+            view.
+          </UserBubble>
+        )}
         {step >= 3 && (
           <AIBubble>
-            Got it. I'll find homes with similar style, a brighter bathroom, larger balcony,
-            verified Wi-Fi, and a quiet coastal location.
+            Got it. I'll look for homes with a brighter bathroom, bigger balcony, and a better
+            view.
           </AIBubble>
         )}
       </div>
-      {step >= 3 && (
-        <div className="mt-4 px-5">
-          <TripBrief
-            title="July Sea Trip Brief"
-            items={["Coastal or seaside", "Quiet area", "Strong Wi-Fi"]}
-            updated={FEEDBACK_BRIEF}
-            compact
-            note="Your circles became structured search criteria."
-          />
-        </div>
-      )}
+      {step >= 3 && <SearchProgressCard />}
+      {menuOpen && <GalleryMenu drawHighlighted={drawHighlighted} />}
     </div>
   );
 }
@@ -603,7 +708,7 @@ export function RegenScreen() {
             image={IMAGES.duneHouse}
             price="$172"
             rating={4.94}
-            matches={["Window bathroom", "Wide balcony", "320 Mbps Wi-Fi"]}
+            matches={["Brighter bathroom", "Wide balcony", "320 Mbps Wi-Fi"]}
             highlight
           />
         </div>

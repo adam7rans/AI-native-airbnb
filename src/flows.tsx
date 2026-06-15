@@ -23,6 +23,10 @@ export interface Step {
   scrollHint?: number; // 0..1 position of the scroll indicator
   input?: { placeholder?: string; listening?: boolean } | null;
   tap?: TapHint;
+  frame?: {
+    contentTopInset?: number;
+    transparentStatusBar?: boolean;
+  };
 }
 
 export interface Flow {
@@ -82,7 +86,7 @@ export const FLOWS: Flow[] = [
     steps: [
       {
         action: "Tap",
-        caption: "Tap “Do what I did last year”",
+        caption: 'Tap "Do what I did last year"',
         detail: "Alex taps the first quick chip on the canvas.",
         screen: <CanvasScreen activeChip="Do what I did last year" />,
         input: ask,
@@ -91,7 +95,7 @@ export const FLOWS: Flow[] = [
       {
         action: "Result",
         caption: "Trip rebuilt",
-        detail: "AI returns the “Your July trip, rebuilt” screen — same stay, experience, and service, with availability checked.",
+        detail: 'AI returns the "Your July trip, rebuilt" screen — same stay, experience, and service, with availability checked.',
         screen: <RebuiltScreen />,
         input: { placeholder: "Swap a stay, date, or activity…" },
       },
@@ -119,7 +123,7 @@ export const FLOWS: Flow[] = [
     steps: [
       {
         action: "Tap",
-        caption: "Tap “Same trip, but better”",
+        caption: 'Tap "Same trip, but better"',
         detail: "Alex taps the second quick chip.",
         screen: <CanvasScreen activeChip="Same trip, but better" />,
         input: ask,
@@ -127,8 +131,8 @@ export const FLOWS: Flow[] = [
       },
       {
         action: "Tap",
-        caption: "Choose “Quieter this year”",
-        detail: "AI asks how to improve it; Alex picks the “Quieter this year” direction from the chooser.",
+        caption: 'Choose "Quieter this year"',
+        detail: 'AI asks how to improve it; Alex picks the "Quieter this year" direction from the chooser.',
         screen: <RefineScreen active="Quieter this year" />,
         input: { placeholder: "Or tell me how to improve it…" },
         tap: { x: 196, y: 300 },
@@ -136,7 +140,7 @@ export const FLOWS: Flow[] = [
       {
         action: "Result",
         caption: "Brief updated + why",
-        detail: "AI regenerates: the Trip Brief gains quiet/sleep-quality criteria and a “Why this changed” card explains the shift.",
+        detail: 'AI regenerates: the Trip Brief gains quiet/sleep-quality criteria and a "Why this changed" card explains the shift.',
         screen: <QuieterScreen />,
         input: { placeholder: "Make it even calmer…" },
         scrollHint: 0,
@@ -155,11 +159,12 @@ export const FLOWS: Flow[] = [
   {
     no: 3,
     tag: "Branch 3",
-    title: "Focus mode on one home",
-    summary: "A listing detail re-ordered around what this user cares about.",
+    title: "Personalized stay detail",
+    summary:
+      "Every home listing is reordered around what this specific user cares about. The AI has observed that Alex, across dozens of listings over five years, consistently checks the same things first: verified Wi-Fi, a real workspace, and a balcony with a view. So when Alex opens any listing, those details are surfaced at the top — not buried in a generic amenities list. A different user who always checks pet policies and parking would see a completely different layout for the same home.",
     aiBehavior:
-      "Surfaces Wi-Fi, workspace, quiet, balcony view, and walk-to-water first, with a personalized 'Why this fits' summary and quick jumps.",
-    whyMatters: "The detail page answers this user's specific questions immediately.",
+      "Analyzes years of listing-browsing behavior — which sections the user scrolls to first, which photos they zoom into, which amenity filters they toggle — to build a per-user priority model. Reorders the detail page so the user's top concerns (Wi-Fi, workspace, quiet, balcony) appear first, with a 'Why this fits' summary and quick jumps.",
+    whyMatters: "The detail page answers this user's specific questions immediately, instead of making them scroll past irrelevant information. Every listing feels like it was written for them.",
     prdSection: { label: "§10 Branch 3: Focus on One Home", anchor: "#branch-3-focus-on-one-home-and-give-visual-feedback" },
     steps: [
       {
@@ -174,7 +179,7 @@ export const FLOWS: Flow[] = [
       },
       {
         action: "Result",
-        caption: "“Why this fits” detail",
+        caption: '"Why this fits" detail',
         detail: "The listing opens with a personalized summary grid (verified Wi-Fi, workspace, quiet, sea-view balcony…).",
         screen: <FocusScreen />,
         input: { placeholder: "Ask about this home…" },
@@ -194,47 +199,102 @@ export const FLOWS: Flow[] = [
   {
     no: "3B",
     tag: "Branch 3B",
-    title: "Visual feedback mode",
-    summary: "Circle parts of photos and react by voice — markup becomes search criteria.",
+    title: "Draw-to-search",
+    summary:
+      "Draw mode is a system-level capability — available on any screen, at any time. Here we show the most coherent version of the flow: Alex opens the Casa Mare photo gallery, brings up the plus menu there, activates draw mode, and then circles specific images while speaking.\n\nUX note: for the demo, exiting voice mode is shown separately from the AI response, but a more flexible product pattern could also offer an explicit Done button for draw mode. That Done-to-exit behavior should always be available as an option, even if users prefer a faster auto-submit pattern.",
     aiBehavior:
-      "Turns hand-drawn circles + speech into structured constraints (window bathroom, larger balcony, better view) and regenerates matching homes.",
-    whyMatters: "Users react to images directly instead of describing everything in words.",
+      "Watches the user's drawn circles in real-time alongside their spoken input. Converts visual markup + speech into structured search constraints (brighter bathroom, larger balcony, better view) and regenerates matching homes.",
+    whyMatters: "Users react to what they see instead of describing everything in words. The AI turns a gesture and a sentence into precise search criteria.",
     prdSection: { label: "§10 Branch 3: Visual Feedback", anchor: "#branch-3-focus-on-one-home-and-give-visual-feedback" },
     steps: [
       {
-        action: "Open",
-        caption: "Open the gallery",
-        detail: "Alex opens the photo gallery for a home in Feedback mode.",
+        action: "Tap",
+        caption: "Tap into photos",
+        detail: "Alex is on the Casa Mare listing. He taps the hero image / photo count to open the gallery view.",
+        screen: <FocusScreen />,
+        input: ask,
+        tap: { x: 76, y: 278 },
+      },
+      {
+        action: "Result",
+        caption: "Gallery opens",
+        detail: "The Casa Mare photo gallery opens, giving Alex a grid view of the listing images before any draw interaction begins.",
         screen: <GalleryScreen step={0} />,
-        input: { placeholder: "Circle an image or tell me more…" },
+        input: ask,
+      },
+      {
+        action: "Tap",
+        caption: "Tap the + menu",
+        detail: "Inside the gallery, Alex taps the plus icon on the input bar to reveal extra input modes.",
+        screen: <GalleryScreen step={0} menuOpen />,
+        input: ask,
+        tap: { x: 45, y: 808 },
+      },
+      {
+        action: "Tap",
+        caption: 'Tap "Draw on screen"',
+        detail: "The gallery plus menu shows Draw on screen, Voice message, and Camera. Alex taps Draw on screen.",
+        screen: <GalleryScreen step={0} menuOpen drawHighlighted />,
+        input: ask,
+        tap: { x: 116, y: 658 },
+      },
+      {
+        action: "Result",
+        caption: "Draw mode activates",
+        detail: "Draw mode activates inside the gallery itself. Alex can now circle any photo and speak or type to search.",
+        screen: <GalleryScreen step={0} drawMode />,
+        input: { placeholder: "Circle anything or speak…" },
+        frame: { contentTopInset: 34, transparentStatusBar: true },
+      },
+      {
+        action: "Tap",
+        caption: "Tap voice mode",
+        detail: "Alex taps the pink waveform button to start live voice mode before giving feedback.",
+        screen: <GalleryScreen step={0} drawMode />,
+        input: { placeholder: "Circle anything or speak…" },
+        tap: { x: 349, y: 808 },
+        frame: { contentTopInset: 34, transparentStatusBar: true },
       },
       {
         action: "Draw",
         caption: "Circle the bathroom + speak",
-        detail: "Alex circles the bathroom photo and says “I like this bathroom, but with natural light.”",
-        screen: <GalleryScreen step={1} />,
+        detail: 'Alex circles the bathroom photo and says "I want a brighter bathroom."',
+        screen: <GalleryScreen step={1} drawMode />,
         input: { placeholder: "Circle an image or tell me more…", listening: true },
+        frame: { contentTopInset: 34, transparentStatusBar: true },
       },
       {
         action: "Draw",
         caption: "Circle the balcony + speak",
-        detail: "Alex circles the balcony and says “Bigger balcony, better view.”",
-        screen: <GalleryScreen step={2} />,
+        detail:
+          'Alex keeps the same live voice note going and adds: "And on this photo, I want a bigger balcony and better view."',
+        screen: <GalleryScreen step={2} drawMode />,
         input: { placeholder: "Circle an image or tell me more…", listening: true },
+        frame: { contentTopInset: 34, transparentStatusBar: true },
+      },
+      {
+        action: "Tap",
+        caption: "Exit voice mode",
+        detail: "After finishing the continuous voice note, Alex taps the X button to exit voice mode.",
+        screen: <GalleryScreen step={2} drawMode />,
+        input: { placeholder: "Circle an image or tell me more…", listening: true },
+        tap: { x: 347, y: 808 },
+        frame: { contentTopInset: 34, transparentStatusBar: true },
       },
       {
         action: "Result",
-        caption: "AI + Trip Brief updated",
-        detail: "AI confirms the new criteria and the Trip Brief updates with window bathroom, larger balcony, better view, keep style.",
-        screen: <GalleryScreen step={3} />,
-        scrollY: 180,
+        caption: "AI starts searching",
+        detail: "AI confirms the feedback and begins searching for homes with a brighter bathroom, bigger balcony, and better view.",
+        screen: <GalleryScreen step={3} drawMode />,
+        scrollY: 92,
+        scrollHint: 0.12,
         input: { placeholder: "Circle an image or tell me more…" },
-        scrollHint: 0.45,
+        frame: { contentTopInset: 34, transparentStatusBar: true },
       },
       {
         action: "Result",
         caption: "Regenerated homes",
-        detail: "The canvas regenerates into “Homes matching your changes” with the applied feedback chips.",
+        detail: 'The canvas regenerates into "Homes matching your changes" with the applied feedback chips.',
         screen: <RegenScreen />,
         input: { placeholder: "Refine these results…" },
         scrollHint: 0,
@@ -276,8 +336,8 @@ export const FLOWS: Flow[] = [
       },
       {
         action: "Result",
-        caption: "“Build around these”",
-        detail: "Alex says “Build the trip around these.” AI assembles Trip Option A with compare / save actions.",
+        caption: '"Build around these"',
+        detail: 'Alex says "Build the trip around these." AI assembles Trip Option A with compare / save actions.',
         screen: <BundleScreen selected={true} showBundle={true} />,
         scrollY: 260,
         scrollHint: 0.8,
@@ -298,14 +358,14 @@ export const FLOWS: Flow[] = [
       {
         action: "Open",
         caption: "Original itinerary",
-        detail: "Alex says “Show me what I did last July.” The trip renders as Day 1–3.",
+        detail: 'Alex says "Show me what I did last July." The trip renders as Day 1–3.',
         screen: <ItineraryScreen stage="original" />,
         input: { placeholder: "Edit any day…" },
       },
       {
         action: "Voice",
         caption: "Speak the edit",
-        detail: "Alex says “Move the food walk to noon, remove the boat tour, and add something for the kids at 5.”",
+        detail: 'Alex says "Move the food walk to noon, remove the boat tour, and add something for the kids at 5."',
         screen: <ItineraryScreen stage="command" />,
         scrollY: 150,
         input: { placeholder: "Edit any day…", listening: true },

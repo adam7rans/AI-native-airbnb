@@ -46,7 +46,7 @@ reads at a glance with no interaction required.
 | 1 | Repeat last year | Tap → Result → Scroll |
 | 2 | Same trip, but better | Tap → **Choose** → Result → Scroll |
 | 3 | Focus mode on one home | Tap → Result → Scroll |
-| 3B | Visual feedback | Open → Draw → Draw → Result → Result → Scroll |
+| 3B | Visual feedback | Tap → Result → Tap → Tap → Result → Tap → Draw → Draw → Tap → Result → Result → Scroll |
 | 4 | Circle-to-bundle | Open → Draw → Result |
 | 5 | Itinerary remix | Open → Voice → Result |
 
@@ -64,8 +64,8 @@ pnpm preview  # serve the production build
 - `src/flows.tsx` — the flow definitions: every branch, its steps, screen state, scroll
   offset, tap target, and the written-out step description. **Edit flows here.**
 - `src/screens/Screens.tsx` — parameterized screen bodies (pure tall content) reused across
-  steps, e.g. `GalleryScreen({step})`, `BundleScreen({selected, showBundle})`,
-  `ItineraryScreen({stage})`.
+  steps, e.g. `GalleryScreen({ step, drawMode, menuOpen, drawHighlighted })`,
+  `BundleScreen({selected, showBundle})`, `ItineraryScreen({stage})`.
 - `src/components/DeviceFrame.tsx` — the static 9:16 device shell (status bar, simulated
   scroll via `scrollY`, scroll indicator, tap dot, fixed input bar overlay).
 - `src/components/FlowBoard.tsx` — renders a branch: summary card + a row of `DeviceFrame`s
