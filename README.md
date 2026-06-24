@@ -5,8 +5,11 @@ High-fidelity **flow board** of a re-imagined, AI-native Airbnb home experience
 AI-generated **Adaptive Trip Canvas** built from years of travel behavior — then steers it
 through voice, text, taps, circles, and feedback.
 
-**🔗 View the flow board: https://ai-native-airbnb.vercel.app/** — user flows built in
-real code and rendered as a static board (a presentation artifact, not an interactive app).
+**🔗 View the flow board: https://ai-native-airbnb.vercel.app/**
+
+> Note: this is **not a clickable demo**. Every screen and user flow is built in real React
+> code and rendered as a static, non-interactive board — it shows each step of the
+> experience visually (open, tap, scroll, voice, draw, result) without anything to click.
 
 ## Documentation
 
